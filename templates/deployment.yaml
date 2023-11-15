@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "flask-uwsgi-chart.fullname" . }}
+  labels:
+    {{- include "flask-uwsgi-chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.uwsgi.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "flask-uwsgi-chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "flask-uwsgi-chart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: uwsgi
+          image: "{{ .Values.uwsgi.image.repository }}:{{ .Values.uwsgi.image.tag }}"
+          ports:
+            - containerPort: 80
+          {{- with .Values.uwsgi.env }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.uwsgi.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+---

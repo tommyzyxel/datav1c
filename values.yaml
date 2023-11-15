@@ -1,0 +1,16 @@
+flask:
+  image:
+    repository: your/flask-app
+    tag: latest
+  service:
+    name: flask-app
+    port: 5000
+
+uwsgi:
+  image:
+    repository: tiangolo/uwsgi-nginx-flask
+    tag: python3.8
+  replicaCount: 1
+  service:
+    name: uwsgi
+    port: 80

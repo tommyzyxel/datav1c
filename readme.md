@@ -1,0 +1,1 @@
+Please note that this Helm chart assumes a basic Flask application structure. You may need to modify it based on your specific Flask application requirements. Also, make sure to replace placeholder values like your/flask-app, latest, and other application-specific values with your actual values.

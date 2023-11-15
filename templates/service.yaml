@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.uwsgi.service.name }}
+  labels:
+    {{- include "flask-uwsgi-chart.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{- include "flask-uwsgi-chart.selectorLabels" . | nindent 4 }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.uwsgi.service.port }}
+      targetPort: 80
+  type: ClusterIP
+---
