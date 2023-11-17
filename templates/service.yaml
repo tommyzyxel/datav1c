@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.uwsgi.service.name }}
+  name: {{ include "buildachart.fullname" . }}
   labels:
-    {{- include "flask-uwsgi-chart.labels" . | nindent 4 }}
+    {{- include "buildachart.labels" . | nindent 4 }}
 spec:
-  selector:
-    {{- include "flask-uwsgi-chart.selectorLabels" . | nindent 4 }}
+  type: {{ .Values.service.type }}
   ports:
-    - protocol: TCP
-      port: {{ .Values.uwsgi.service.port }}
-      targetPort: 80
-  type: ClusterIP
----
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "buildachart.selectorLabels" . | nindent 4 }}
